@@ -1,0 +1,16 @@
+require_relative 'handler'
+
+class EventRouter
+  def initialize
+    @handlers = []
+  end
+
+  def register(handler)
+    raise ArgumentError, "#{handler.class} must be a Handler" unless handler.is_a?(Handler)
+    @handlers << handler
+  end
+
+  def dispatch(event)
+    @handlers.each { |h| h.handle(event) }
+  end
+end
